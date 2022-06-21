@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/20 15:45:34 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/21 15:49:13 by fmalizia         ###   ########.ch       */
+/*   Created: 2021/10/25 14:08:41 by fmalizia          #+#    #+#             */
+/*   Updated: 2022/06/21 13:57:24 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "../../includes/philosophers.h"
 
-int	main(int ac, char **av)
+int	ft_isdigit(int a)
 {
-	t_table	*table;
-	t_philo	**ph;
-
-	if (!input_check(ac, av))
-		return (0);
-	printf("table\n");
-	table = set_table(ac, av);
-	printf("chain\n");
-	*ph = create_chain(*table);
-}
-
-int	input_check(int ac, char **av)
-{
-	int	i;
-
-	i = 1;
-	if (ac < 5 || ac > 6)
-	{
-		printf("Argument Error\n");
-		return (0);
-	}
-	return (1);
+	if ('0' <= a && a <= '9')
+		return (1);
+	return (0);
 }

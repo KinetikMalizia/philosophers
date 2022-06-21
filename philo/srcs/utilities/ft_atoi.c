@@ -6,11 +6,11 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 14:57:07 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/20 16:30:08 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/21 13:52:25 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../../includes/philosophers.h"
 
 static int	ft_strlen_nbr(const char *str);
 

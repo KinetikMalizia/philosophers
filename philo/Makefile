@@ -5,76 +5,63 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/06/20 14:53:45 by fmalizia          #+#    #+#              #
-#    Updated: 2022/06/20 14:56:24 by fmalizia         ###   ########.ch        #
+#    Created: 2022/06/21 13:59:32 by fmalizia          #+#    #+#              #
+#    Updated: 2022/06/21 14:47:05 by fmalizia         ###   ########.ch        #
 #                                                                              #
 # **************************************************************************** #
 
-# tool macros
-CC ?= gcc
-CCFLAGS := -Wall -Wextra -Werror
-DBGFLAGS := -g
-CCOBJFLAGS := $(CCFLAGS) -c
+NAME = philosophers
 
-# path macros
-BIN_PATH := bin
-OBJ_PATH := obj
-SRC_PATH := src
-DBG_PATH := debug
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
 
-# compile macros
-TARGET_NAME := # FILL: target name
-ifeq ($(OS),Windows_NT)
-	TARGET_NAME := $(addsuffix .exe,$(TARGET_NAME))
-endif
-TARGET := $(BIN_PATH)/$(TARGET_NAME)
-TARGET_DEBUG := $(DBG_PATH)/$(TARGET_NAME)
+SRCDIR = srcs/
+INCDIR = includes/
+OBJDIR = objs
 
-# src files & obj files
-SRC := $(foreach x, $(SRC_PATH), $(wildcard $(addprefix $(x)/*,.c*)))
-OBJ := $(addprefix $(OBJ_PATH)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
-OBJ_DEBUG := $(addprefix $(DBG_PATH)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
 
-# clean files list
-DISTCLEAN_LIST := $(OBJ) \
-				$(OBJ_DEBUG)
-CLEAN_LIST := $(TARGET) \
-				$(TARGET_DEBUG) \
-				$(DISTCLEAN_LIST)
+SRC		:=	srcs/main.c \
+			srcs/setup.c \
+			srcs/utilities/ft_atoi.c \
+			srcs/utilities/ft_isdigit.c\
 
-# default rule
-default: makedir all
+//OBJS := $(SRC:.c=.o)
 
-# non-phony targets
-$(TARGET): $(OBJ)
-	$(CC) $(CCFLAGS) -o $@ $(OBJ)
+GR	= \033[32;1m
+RE	= \033[31;1m
+YE	= \033[33;1m
+CY	= \033[36;1m
+RC	= \033[0m
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c*
-	$(CC) $(CCOBJFLAGS) -o $@ $<
 
-$(DBG_PATH)/%.o: $(SRC_PATH)/%.c*
-	$(CC) $(CCOBJFLAGS) $(DBGFLAGS) -o $@ $<
+all : $(OBJDIR) $(NAME)
 
-$(TARGET_DEBUG): $(OBJ_DEBUG)
-	$(CC) $(CCFLAGS) $(DBGFLAGS) $(OBJ_DEBUG) -o $@
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
 
-# phony rules
-.PHONY: makedir
-makedir:
-	@mkdir -p $(BIN_PATH) $(OBJ_PATH) $(DBG_PATH)
+$(OBJDIR)/%.o: %.c
+		$(CC) $(CFLAGS) -c -o $@ $<
+# Linking
+$(NAME)	: $(SRCS)  $(OBJS)
+	@printf "\n$(GR)=== Compiled [$(CC) $(CFLAGS)] ===\n--- $(SRC)$(RC)\n"
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-.PHONY: all
-all: $(TARGET)
+# Cleaning
+clean :
+	@printf "$(RE)--- Removing $(OBJDIR)$(RC)\n"
+	@rm -rf $(OBJDIR)
 
-.PHONY: debug
-debug: $(TARGET_DEBUG)
+fclean : clean
+	@printf "$(RE)--- Removing $(NAME)$(RC)\n"
+	@rm -f $(NAME)
 
-.PHONY: clean
-clean:
-	@echo CLEAN $(CLEAN_LIST)
-	@rm -f $(CLEAN_LIST)
+# Special rule to force to remake everything
+re : fclean all 
 
-.PHONY: distclean
-distclean:
-	@echo CLEAN $(DISTCLEAN_LIST)
-	@rm -f $(DISTCLEAN_LIST)
+# This runs the program
+run : $(NAME)
+	@printf "$(CY)>>> Running $(NAME)$(RC)\n"
+	./$(NAME)
+
+# This specifies the rules that does not correspond to any filename
+.PHONY	= all run clean fclean re
