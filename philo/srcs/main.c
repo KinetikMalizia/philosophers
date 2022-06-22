@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:45:34 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/21 15:49:13 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/22 17:03:54 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	main(int ac, char **av)
 
 	if (!input_check(ac, av))
 		return (0);
-	printf("table\n");
+	ph = malloc(sizeof(t_philo *));
 	table = set_table(ac, av);
-	printf("chain\n");
-	*ph = create_chain(*table);
+	*ph = create_chain(table);
+	print_phi(*ph);
 }
 
 int	input_check(int ac, char **av)

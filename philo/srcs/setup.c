@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:50:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/21 15:48:59 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/22 17:03:44 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ t_philo	*add_philosopher(int id)
 {
 	t_philo	*new;
 
-	printf("creating philo: %d", id);
 	new = malloc(sizeof(t_philo));
 	new->philo_id = id;
+	pthread_create(&new->philosopher, NULL, &routine, NULL);
 	new->last_meal = 0;
 	new->num_meals = 0;
 	return (new);
@@ -44,7 +44,7 @@ t_table	*set_table(int ac, char **av)
 	return (tab);
 }
 
-t_philo	*create_chain(t_table tab)
+t_philo	*create_chain(t_table *tab)
 {
 	int		i;
 	t_philo	*head;
@@ -52,13 +52,24 @@ t_philo	*create_chain(t_table tab)
 	t_philo	*next;
 
 	i = 1;
-	printf("dead");
 	head = add_philosopher(1);
 	prev = head;
-	while (i++ < tab.philos_num)
+	while (i++ < tab->philos_num)
 	{
 		prev->next = add_philosopher(i);
 		prev->next->prev = prev;
+		prev->table = tab;
+		prev = prev->next;
 	}
+	prev->next = head;
+	prev->table = tab;
+	head->prev = prev;
+	tab->head = head;
 	return (head);
+}
+
+void *	routine()
+{
+	printf("hello\n");
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:14:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/21 15:48:39 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/22 17:03:49 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int		ft_atoi(const char *str);
 int		ft_isdigit(int a);
 t_table	*set_table(int ac, char **av);
 t_philo	*add_philosopher(int id);
-t_philo	*create_chain(t_table tab);
+t_philo	*create_chain(t_table *tab);
 int		input_check(int ac, char **av);
+/*--------------------------------------------------*/
+void	print_phi(t_philo *head);
+void *	routine(void);
 
 #endif
