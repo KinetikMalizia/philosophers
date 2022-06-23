@@ -5,63 +5,36 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/06/21 13:59:32 by fmalizia          #+#    #+#              #
-#    Updated: 2022/06/21 14:47:05 by fmalizia         ###   ########.ch        #
+#    Created: 2022/06/23 13:51:43 by fmalizia          #+#    #+#              #
+#    Updated: 2022/06/23 14:14:55 by fmalizia         ###   ########.ch        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philosophers
+SRC_DIR := srcs
+OBJ_DIR := objs
+BIN_DIR := .
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+EXE := $(BIN_DIR)/philosophers
+SRC := $(wildcard $(SRC_DIR)/*.c)
+OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-SRCDIR = srcs/
-INCDIR = includes/
-OBJDIR = objs
+CPPFLAGS := -Iinclude -MMD -MP
+CFLAGS   := -Wall -Werror -Wextra
 
+.PHONY: all clean
 
-SRC		:=	srcs/main.c \
-			srcs/setup.c \
-			srcs/utilities/ft_atoi.c \
-			srcs/utilities/ft_isdigit.c\
+all: $(EXE)
 
-//OBJS := $(SRC:.c=.o)
+$(EXE): $(OBJ) | $(BIN_DIR)
+	$(CC) $^ -o $@
 
-GR	= \033[32;1m
-RE	= \033[31;1m
-YE	= \033[33;1m
-CY	= \033[36;1m
-RC	= \033[0m
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
+$(BIN_DIR) $(OBJ_DIR):
+	mkdir -p $@
 
-all : $(OBJDIR) $(NAME)
+clean:
+	$(RM) -rv $(OBJ_DIR)
 
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
-
-$(OBJDIR)/%.o: %.c
-		$(CC) $(CFLAGS) -c -o $@ $<
-# Linking
-$(NAME)	: $(SRCS)  $(OBJS)
-	@printf "\n$(GR)=== Compiled [$(CC) $(CFLAGS)] ===\n--- $(SRC)$(RC)\n"
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-
-# Cleaning
-clean :
-	@printf "$(RE)--- Removing $(OBJDIR)$(RC)\n"
-	@rm -rf $(OBJDIR)
-
-fclean : clean
-	@printf "$(RE)--- Removing $(NAME)$(RC)\n"
-	@rm -f $(NAME)
-
-# Special rule to force to remake everything
-re : fclean all 
-
-# This runs the program
-run : $(NAME)
-	@printf "$(CY)>>> Running $(NAME)$(RC)\n"
-	./$(NAME)
-
-# This specifies the rules that does not correspond to any filename
-.PHONY	= all run clean fclean re
+-include $(OBJ:.o=.d)
