@@ -6,7 +6,7 @@
 #    By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:51:43 by fmalizia          #+#    #+#              #
-#    Updated: 2022/06/23 15:35:41 by fmalizia         ###   ########.ch        #
+#    Updated: 2022/06/23 16:32:39 by fmalizia         ###   ########.ch        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,14 +27,18 @@ YE	= \033[33;1m
 CY	= \033[36;1m
 RC	= \033[0m
 
-.PHONY: all clean
 
-all: start $(NAME)
+
+all:start $(NAME)
 
 start:
+	@cat includes/art
 	@printf "$(CY) **Compiling Philosophers**\n$(RE)"
 
-$(NAME): $(OBJ) | $(BIN_DIR)
+rules:
+	@printf "$(CY)**USE: ./philosophers <number of philosophers> <time to die> <time to eat> <time to sleep> (optional)<number of times each philosophers must eat>\n$(RE)"
+
+$(NAME): $(OBJ) | $(BIN_DIR) 
 	@$(CC) $^ -o $@
 	@printf "$(GR)SUCCESS$(RC)\n"
 
@@ -53,4 +57,8 @@ fclean: clean
 	@$(RM) -r $(NAME)
 	@printf "$(YE)** Deleting Binary  **\n$(RC)"
 
+re: fclean all
+
 -include $(OBJ:.o=.d)
+
+.PHONY: all clean fclean start rules
