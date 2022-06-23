@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:14:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/22 17:03:49 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/23 15:35:34 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ t_table	*set_table(int ac, char **av);
 t_philo	*add_philosopher(int id);
 t_philo	*create_chain(t_table *tab);
 int		input_check(int ac, char **av);
+void	join(t_philo *phil);
 /*--------------------------------------------------*/
 void	print_phi(t_philo *head);
-void *	routine(void);
+void	*routine(void *data);
 
 #endif

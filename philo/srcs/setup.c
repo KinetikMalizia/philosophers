@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:50:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/22 17:03:44 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/23 15:35:36 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_philo	*add_philosopher(int id)
 
 	new = malloc(sizeof(t_philo));
 	new->philo_id = id;
-	pthread_create(&new->philosopher, NULL, &routine, NULL);
 	new->last_meal = 0;
 	new->num_meals = 0;
 	return (new);
@@ -39,7 +38,8 @@ t_table	*set_table(int ac, char **av)
 		tab->eat_num = -1;
 	tab->someonedied = FALSE;
 	tab->forks = malloc(sizeof(pthread_mutex_t) * tab->philos_num);
-	pthread_mutex_init(&(tab->print_locker), NULL);
+	if (pthread_mutex_init(&tab->print_locker, NULL))
+		printf("mutex init failed\n");
 	tab->head = NULL;
 	return (tab);
 }
@@ -49,7 +49,6 @@ t_philo	*create_chain(t_table *tab)
 	int		i;
 	t_philo	*head;
 	t_philo	*prev;
-	t_philo	*next;
 
 	i = 1;
 	head = add_philosopher(1);
@@ -59,17 +58,24 @@ t_philo	*create_chain(t_table *tab)
 		prev->next = add_philosopher(i);
 		prev->next->prev = prev;
 		prev->table = tab;
+		pthread_create(&(prev->philosopher), NULL, &routine, (void *)prev);
 		prev = prev->next;
 	}
 	prev->next = head;
 	prev->table = tab;
+	pthread_create(&(prev->philosopher), NULL, &routine, (void *)prev);
 	head->prev = prev;
 	tab->head = head;
 	return (head);
 }
 
-void *	routine()
+void	*routine(void *data)
 {
-	printf("hello\n");
+	t_philo	*current;
+
+	current = (t_philo *)data;
+	pthread_mutex_lock(&(current->table->print_locker));
+	printf("hello: %d\n", current->philo_id);
+	pthread_mutex_unlock(&(current->table->print_locker));
 	return (NULL);
 }
