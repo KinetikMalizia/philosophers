@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:14:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/23 15:54:56 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/28 15:59:13 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,13 @@ void	join(t_philo *phil);
 /*--------------------------------------------------*/
 void	print_phi(t_philo *head);
 void	*routine(void *data);
+int		smart_sleep(long ms, t_table *tab);
+long	current_time(void);
+void	print_action(char *status, t_philo *philo);
+void	eat_action(t_philo	*phil);
+void	sleep_action(t_philo *phil);
+void	make_forks(t_table	*tab);
+void	*death_monitor(void	*data);
+void	print_fork(char *status, t_philo *philo, int f);
 
 #endif

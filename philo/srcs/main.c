@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:45:34 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/23 16:32:46 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/28 15:59:03 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ int	main(int ac, char **av)
 		return (0);
 	ph = malloc(sizeof(t_philo *));
 	table = set_table(ac, av);
+	table->start_time = current_time();
 	*ph = create_chain(table);
+	pthread_create(&(table->death), NULL, &death_monitor, (void *)table);
 	pthread_join((*ph)->philosopher, NULL);
 	join(*ph);
-	//print_phi(*ph);
 }
 
 int	input_check(int ac, char **av)

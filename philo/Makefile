@@ -6,7 +6,7 @@
 #    By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:51:43 by fmalizia          #+#    #+#              #
-#    Updated: 2022/06/23 16:32:39 by fmalizia         ###   ########.ch        #
+#    Updated: 2022/06/28 15:59:07 by fmalizia         ###   ########.ch        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC_DIR := srcs
 OBJ_DIR := objs
 BIN_DIR := .
 
-NAME := philosophers
+NAME := philo
 SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

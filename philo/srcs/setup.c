@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:50:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/23 16:32:51 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/28 15:59:11 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,24 @@ t_table	*set_table(int ac, char **av)
 	else
 		tab->eat_num = -1;
 	tab->someonedied = FALSE;
-	tab->forks = malloc(sizeof(pthread_mutex_t) * tab->philos_num);
+	tab->forks = malloc(sizeof(pthread_mutex_t) * (tab->philos_num + 1));
 	if (pthread_mutex_init(&tab->print_locker, NULL))
 		printf("mutex init failed\n");
 	tab->head = NULL;
+	tab->death = malloc(sizeof(pthread_t));
 	return (tab);
+}
+
+void	make_forks(t_table	*tab)
+{
+	int	i;
+
+	i = 0;
+	while (i <= tab->philos_num)
+	{
+		pthread_mutex_init(&(tab->forks[i]), NULL);
+		++i;
+	}
 }
 
 t_philo	*create_chain(t_table *tab)
@@ -67,15 +80,4 @@ t_philo	*create_chain(t_table *tab)
 	head->prev = prev;
 	tab->head = head;
 	return (head);
-}
-
-void	*routine(void *data)
-{
-	t_philo	*current;
-
-	current = (t_philo *)data;
-	pthread_mutex_lock(&(current->table->print_locker));
-	printf("hello: %d\n", current->philo_id);
-	pthread_mutex_unlock(&(current->table->print_locker));
-	return (NULL);
 }
