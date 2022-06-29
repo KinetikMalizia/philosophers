@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:02:16 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/28 15:59:00 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/29 15:38:05 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,32 +46,37 @@ void	eat_action(t_philo	*phil)
 	pthread_mutex_lock(&(phil->table->forks[phil->prev->philo_id]));
 	print_fork("took fork", phil, phil->prev->philo_id);
 	print_action("is\teating   🍝", phil);
-	phil->last_meal = current_time();
+	phil->last_meal = current_time() - phil->table->start_time;
 	phil->num_meals += 1;
 	smart_sleep(phil->table->time_to_eat, phil->table);
+	if (phil->num_meals == phil->table->eat_num)
+		print_action("has eaten enough", phil);
 	pthread_mutex_unlock(&(phil->table->forks[phil->prev->philo_id]));
-	print_fork("put down fork", phil, phil->prev->philo_id);
 	pthread_mutex_unlock(&(phil->table->forks[phil->philo_id]));
-	print_fork("put down fork", phil, phil->philo_id);
 }
 
 void	*death_monitor(void	*data)
 {
 	t_table	*tab;
 	t_philo	*phil;
+	int		done;
 
+	done = 0;
 	tab = (t_table *)data;
 	phil = tab->head;
 	while (!(tab->someonedied))
 	{
+		if (phil->num_meals >= tab->eat_num && tab->eat_num > 0)
+			++done;
+		else
+			done = 0;
+		if (done >= tab->philos_num)
+			break ;
 		if (current_time() - tab->start_time
 			> phil->last_meal + tab->time_to_die)
 		{
 			tab->someonedied = 1;
-			pthread_mutex_lock(&tab->print_locker);
-			printf("%ld\tphilo %d is %s\n", current_time()
-				- phil->table->start_time, phil->philo_id, "DEAD 💀");
-			pthread_mutex_unlock(&tab->print_locker);
+			print_death(phil);
 		}
 		phil = phil->next;
 	}

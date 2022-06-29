@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:14:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/28 15:59:13 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/29 15:38:04 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # define INT_MIN -2147483648
 
 int		ft_atoi(const char *str);
-int		ft_isdigit(int a);
 t_table	*set_table(int ac, char **av);
 t_philo	*add_philosopher(int id);
 t_philo	*create_chain(t_table *tab);
@@ -44,5 +43,8 @@ void	sleep_action(t_philo *phil);
 void	make_forks(t_table	*tab);
 void	*death_monitor(void	*data);
 void	print_fork(char *status, t_philo *philo, int f);
+void	print_death(t_philo	*phil);
+int		check_if_digit(int ac, char **av);
+void	print_meals(t_philo *phil);
 
 #endif

@@ -6,12 +6,13 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:07:27 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/28 15:59:05 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/29 15:38:01 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
+/*
 void	print_phi(t_philo *head)
 {
 	t_philo	*current;
@@ -38,6 +39,7 @@ void	print_phi(t_philo *head)
 	printf("num meal: %d\n", current->num_meals);
 	printf("-----------------------------\n");
 }
+*/
 
 int	smart_sleep(long ms, t_table *tab)
 {
@@ -75,22 +77,19 @@ void	print_fork(char *status, t_philo *philo, int f)
 {
 	pthread_mutex_lock(&(philo->table->print_locker));
 	if (!(philo->table->someonedied))
-		printf("%ld\tphilo %d\t%s %d\n",
-			current_time() - philo->table->start_time, philo->philo_id, status, f);
+		printf("%ld\tphilo %d\t%s\t %d\n",
+			current_time() - philo->table->start_time,
+			philo->philo_id, status, f);
 	pthread_mutex_unlock(&(philo->table->print_locker));
 }
 
-/*
-void	print_action(int num, char *status, t_data *data)
+void	print_death(t_philo	*phil)
 {
-	static int	shutdown = 0;
+	t_table	*tab;
 
-	pthread_mutex_lock(&data->print);
-	if (shutdown == 1)
-		return ;
-	if (!ft_strncmp(status, DIED, ft_strlen(status)))
-		shutdown = 1;
-	printf("%ld\t %d %s\n", current_time() - data->start, num, status);
-	pthread_mutex_unlock(&data->print);
+	tab = phil->table;
+	pthread_mutex_lock(&tab->print_locker);
+	printf("%ld\tphilo %d is %s, last meal was %ld\n", current_time()
+		- phil->table->start_time, phil->philo_id, "DEAD 💀", phil->last_meal);
+	pthread_mutex_unlock(&tab->print_locker);
 }
-*/

@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:50:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/28 15:59:11 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/29 15:37:59 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_table	*set_table(int ac, char **av)
 	tab->forks = malloc(sizeof(pthread_mutex_t) * (tab->philos_num + 1));
 	if (pthread_mutex_init(&tab->print_locker, NULL))
 		printf("mutex init failed\n");
+	make_forks(tab);
 	tab->head = NULL;
 	tab->death = malloc(sizeof(pthread_t));
 	return (tab);

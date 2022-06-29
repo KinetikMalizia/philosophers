@@ -6,13 +6,14 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 14:57:07 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/23 16:32:53 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/29 15:37:56 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
 static int	ft_strlen_nbr(const char *str);
+static int	ft_isdigit(int c);
 
 int	ft_atoi(const char *str)
 {
@@ -53,16 +54,30 @@ static int	ft_strlen_nbr(const char *str)
 	}
 	return (i);
 }
-/*
-int	main(int ac, char **av)
-{
-	int	i = 1;
 
-	while (i < ac)
+int	check_if_digit(int ac, char **av)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < ac - 1)
 	{
-		printf("%d\n", atoi(av[i]));
-		printf("%d\n", ft_atoi(av[i]));
-		++i;
+		j = 0;
+		while (av[i][j])
+		{
+			if (!ft_isdigit(av[i][j]))
+				return (0);
+			j++;
+		}
+		i++;
 	}
+	return (1);
 }
-*/
+
+static int	ft_isdigit(int c)
+{
+	if ('0' <= c && c <= '9')
+		return (1);
+	return (0);
+}
