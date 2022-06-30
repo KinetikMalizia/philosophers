@@ -6,7 +6,7 @@
 #    By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/23 13:51:43 by fmalizia          #+#    #+#              #
-#    Updated: 2022/06/29 15:38:02 by fmalizia         ###   ########.ch        #
+#    Updated: 2022/06/30 12:58:53 by fmalizia         ###   ########.ch        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,7 @@ NAME := philo
 SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-CPPFLAGS := -Iinclude -MMD -MP
-CFLAGS   := -Wall -Werror -Wextra
+CFLAGS := -Wall -Werror -Wextra -g
 
 GR	= \033[32;1m
 RE	= \033[31;1m
@@ -32,7 +31,7 @@ RC	= \033[0m
 all:start $(NAME)
 
 start:
-	@cat includes/art
+	@tput setaf 6; cat includes/art; tput setaf default
 	@printf "$(CY) **Compiling Philosophers**\n$(RE)"
 
 rules:
@@ -43,7 +42,7 @@ $(NAME): $(OBJ) | $(BIN_DIR)
 	@printf "$(GR)SUCCESS$(RC)\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@printf "$(GR)///$(RC)"
 
 $(BIN_DIR) $(OBJ_DIR):
@@ -58,7 +57,5 @@ fclean: clean
 	@printf "$(YE)** Deleting Binary  **\n$(RC)"
 
 re: fclean all
-
--include $(OBJ:.o=.d)
 
 .PHONY: all clean fclean start rules

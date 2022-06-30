@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:07:27 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/29 15:38:01 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/30 15:51:59 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	smart_sleep(long ms, t_table *tab)
 	time = current_time();
 	while ((time - start) <= ms - 1 || tab->someonedied)
 	{
-		usleep(10);
+		usleep(50);
 		time = current_time();
 	}
 	return (tab->someonedied);
@@ -89,7 +89,7 @@ void	print_death(t_philo	*phil)
 
 	tab = phil->table;
 	pthread_mutex_lock(&tab->print_locker);
-	printf("%ld\tphilo %d is %s, last meal was %ld\n", current_time()
+	printf("%ld\tphilo %d\tis %s, last meal was %ld\n", current_time()
 		- phil->table->start_time, phil->philo_id, "DEAD 💀", phil->last_meal);
 	pthread_mutex_unlock(&tab->print_locker);
 }

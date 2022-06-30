@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:14:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/29 15:38:04 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/30 12:59:00 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ void	print_fork(char *status, t_philo *philo, int f);
 void	print_death(t_philo	*phil);
 int		check_if_digit(int ac, char **av);
 void	print_meals(t_philo *phil);
+void	kill_philos(t_philo	*head);
+void	clean_table(t_table *tab);
 
 #endif

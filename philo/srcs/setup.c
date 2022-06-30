@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:50:57 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/29 15:37:59 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/06/30 12:58:58 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_table	*set_table(int ac, char **av)
 		printf("mutex init failed\n");
 	make_forks(tab);
 	tab->head = NULL;
-	tab->death = malloc(sizeof(pthread_t));
 	return (tab);
 }
 
