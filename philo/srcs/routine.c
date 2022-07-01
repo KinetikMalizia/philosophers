@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:02:16 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/30 11:07:52 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/07/01 16:52:14 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,13 @@ void	*death_monitor(void	*data)
 		if (done >= tab->philos_num)
 			break ;
 		if (current_time() - tab->start_time
-			> phil->last_meal + tab->time_to_die)
+			> phil->last_meal + tab->time_to_die + 1)
 		{
 			tab->someonedied = 1;
 			print_death(phil);
 		}
 		phil = phil->next;
+		usleep(5);
 	}
 	return (NULL);
 }

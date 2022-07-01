@@ -6,7 +6,7 @@
 /*   By: fmalizia <fmalizia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:07:27 by fmalizia          #+#    #+#             */
-/*   Updated: 2022/06/30 15:51:59 by fmalizia         ###   ########.ch       */
+/*   Updated: 2022/07/01 14:28:19 by fmalizia         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	print_death(t_philo	*phil)
 
 	tab = phil->table;
 	pthread_mutex_lock(&tab->print_locker);
-	printf("%ld\tphilo %d\tis %s, last meal was %ld\n", current_time()
-		- phil->table->start_time, phil->philo_id, "DEAD 💀", phil->last_meal);
+	printf("%ld\tphilo %d\tis %s, dead at %ld\n", current_time()
+		- phil->table->start_time, phil->philo_id,
+		"DEAD 💀", phil->last_meal + phil->table->time_to_die);
 	pthread_mutex_unlock(&tab->print_locker);
 }
